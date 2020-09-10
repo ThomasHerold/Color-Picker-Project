@@ -1,0 +1,9 @@
+.Palette {
+    height: 100vh;
+    font-family: 'Roboto', sans-serif;
+}
+
+/* 90% height relative to it's parent since it is nested under the Palette class in Palette.js */
+.Palette-colors {
+    height: 90%;
+}
