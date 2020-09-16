@@ -1,47 +1,39 @@
 import React, { Component } from 'react'
-import Slider from 'rc-slider'
 import ColorBox from './Colorbox';
-import "rc-slider/assets/index.css";
 import "../styles/palette.css";
+import NavBar from './NavBar';
 
 class Palette extends Component {
     constructor(props) {
         super(props);
 
-        this.state = { level: 500 };
+        this.state = { level: 500, format: "hex" };
         this.changeLevel = this.changeLevel.bind(this);
+        this.changeFormat = this.changeFormat.bind(this);
     }
 
     changeLevel(newLevel) {
         this.setState({ level: newLevel });
     }
 
+    changeFormat(val) {
+        this.setState({ format: val })
+    }
+
     render() {
     
-    const { level } = this.state;
+    const { level, format } = this.state;
     const { colors } = this.props.palette;
 
     const colorBoxes = colors[level].map(color => (
-        <ColorBox background={color.hex} name={color.name} />
+        <ColorBox background={color[format]} name={color.name} />
     ));
 
     return (
     <div className="Palette">
-      <div className="slider"> 
-      <Slider
-            defaultValue={level}
-            min={100}
-            max={900}
-            onAfterChange={this.changeLevel}
-            step={100}
-            trackStyle={{ backgroundColor: "transparent" }}
-            handleStyle={{ backgroundColor: 'green', outline: 'none', border: '2px solid green', boxShadow: 'none', width: '13px', height: '13px', marginTop: '-3px'  }}
-            railStyle={{ height: 8 }}
-
-        />
-      </div>
+        <NavBar level={level} changeLevel={this.changeLevel} handleChange={this.changeFormat} />
         {/* Navbar goes here */}
-            <div className="Palette-colors" >{colorBoxes}</div>
+        <div className="Palette-colors" >{colorBoxes}</div>
         {/* Footer */}
     </div>
         );
