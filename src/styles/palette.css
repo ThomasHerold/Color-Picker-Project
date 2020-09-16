@@ -9,3 +9,9 @@
     flex-wrap: wrap;
     overflow: hidden;
 }
+
+.slider {
+    width: 340px;
+    margin: 0 10px;
+    display: inline-block;
+}
