@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
-import { Select, MenuItem } from '@material-ui/core';
+import { Select, MenuItem, Snackbar, IconButton } from '@material-ui/core';
+import { Close } from '@material-ui/icons';
 import Slider from 'rc-slider';
+import { Link } from 'react-router-dom';
 import "rc-slider/assets/index.css";
 import "../styles/NavBar.css";
 
@@ -9,13 +11,18 @@ class NavBar extends Component {
     constructor(props) {
         super(props);
 
-        this.state = { format: "hex" }
+        this.state = { format: "hex", open: false }
         this.handleChange = this.handleChange.bind(this);
+        this.toggleSnackbar = this.toggleSnackbar.bind(this);
     }
 
     handleChange(evt) {
-        this.setState({ format: evt.target.value });
+        this.setState({ format: evt.target.value, open: true });
         this.props.handleChange(evt.target.value);
+    }
+
+    toggleSnackbar() {
+        this.setState({ open: false })
     }
 
     render() {
@@ -24,7 +31,7 @@ class NavBar extends Component {
 
         return (
         <header className="NavBar">
-        <div className="logo"><a href="#">reactcolorpicker</a></div> 
+        <div className="logo"><Link to={"/"}>reactcolorpicker</Link></div> 
          <div className="slider-container">
             <span>Level: {level}</span> 
             <div className="slider">
@@ -47,6 +54,21 @@ class NavBar extends Component {
                    <MenuItem value="rgba">RGBA - rgba(255, 255, 255, 1.0)</MenuItem>
                </Select>
            </div>
+           <Snackbar 
+                anchorOrigin={{vertical: "bottom", horizontal: "left"}} 
+                open={this.state.open} 
+                autoHideDuration={3000}
+                onClose={this.toggleSnackbar} 
+        message={<span id="message-id">Format Changed To {format.toUpperCase()}</span>}
+                ContentProps={{
+                    "aria-describedby": "message-id"
+                }}
+                action={[
+                    <IconButton onClick={this.toggleSnackbar} color="inherit" key="close" aria-label="close">
+                        <Close />
+                    </IconButton>
+                ]} 
+            />
         </header>
         );
     }
