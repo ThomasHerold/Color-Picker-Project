@@ -2,7 +2,7 @@
 .ColorBox {
     width: 20%;
     height: 25%;
-    margin: 0 auto;
+    margin: 0;
     position: relative;
     cursor: pointer;
 }
