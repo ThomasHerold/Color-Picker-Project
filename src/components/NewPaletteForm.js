@@ -12,8 +12,9 @@ import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import { ChromePicker } from 'react-color';
 import Button from '@material-ui/core/Button';
-import DraggableColorBox from './DraggableColorBox';
+import DraggableColorList from './DraggableColorList';
 import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
+import arrayMove from 'array-move';
 
 
 const drawerWidth = 350;
@@ -82,7 +83,7 @@ const NewPaletteForm = (props) => {
   const [currentColor, setColor] = useState("teal");
   const [colors, setColorList] = useState([]);
   const [colorName, setName] = useState("");
-  const [newPaletteName, setPaletteName] = useState();
+  const [newPaletteName, setPaletteName] = useState("");
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -113,10 +114,12 @@ const NewPaletteForm = (props) => {
   }
 
   const handleSubmit = () => {
+    
+    let newName = newPaletteName;
 
     const newPalette = {
-      paletteName: newPaletteName,
-      id: newPaletteName.toLowerCase().replace(/ /g, "-"),
+      paletteName: newName,
+      id: newName.toLowerCase().replace(/ /g, "-"),
       colors: colors
     };
 
@@ -127,6 +130,10 @@ const NewPaletteForm = (props) => {
   const removeColor = (colorName) => {
     setColorList(colors.filter(color => color.name !== colorName));
   };
+
+  const onSortEnd = ({oldIndex, newIndex}) => {
+    setColorList(arrayMove(colors, oldIndex, newIndex));
+  }
 
   // creating custom validation rule for the text field where we check if the added color is unique
   useEffect(() => {
@@ -142,6 +149,7 @@ const NewPaletteForm = (props) => {
       );
     });
     ValidatorForm.addValidationRule("isPaletteNameUnique", value => {
+      console.log(props.palettes);
       return props.palettes.every(
         ({ paletteName }) =>
           paletteName.toLowerCase() !== value.toLowerCase()
@@ -172,13 +180,14 @@ const NewPaletteForm = (props) => {
           <Typography variant="h6" noWrap>
             Persistent drawer
           </Typography>
-          <ValidatorForm onSubmit={handleSubmit}>
+          <ValidatorForm onSubmit={handleSubmit} instantValidate={false}>
             <TextValidator 
               label="Palette Name" 
-              value={newPaletteName} 
+              value={newPaletteName}
+              name="newPaletteName" 
               onChange={handleChange}
               validators={['required', 'isPaletteNameUnique']}
-              errorMessages={['Enter a palette name, Name already in use']} 
+              errorMessages={['Enter a palette name', 'Name already in use']} 
             />
             <Button variant="contained" color="primary" type="submit">Save Palette</Button>
           </ValidatorForm>
@@ -232,9 +241,7 @@ const NewPaletteForm = (props) => {
         })}
       >
         <div className={classes.drawerHeader} />
-            {colors.map(color => (
-              <DraggableColorBox key={color.name} color={color.color} name={color.name} handleClick={() => removeColor(color.name)} />
-            ))}
+            <DraggableColorList colors={colors} removeColor={removeColor} axis='xy' onSortEnd={onSortEnd} />
       </main>
     </div>
   );
