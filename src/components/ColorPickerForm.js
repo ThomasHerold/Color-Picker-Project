@@ -43,23 +43,23 @@ const ColorPickerForm = (props) => {
 
     return (
     <div className={classes.root}>
-        <ChromePicker 
-          color={currentColor}
-          onChangeComplete={updateCurrentColor}
-          className={classes.picker}
+      <ChromePicker 
+        color={currentColor}
+        onChangeComplete={updateCurrentColor}
+        className={classes.picker}
+      />
+      <ValidatorForm onSubmit={addNewColor} instantValidate={false}>
+        <TextValidator 
+          className={classes.colorNameInput}
+          placeholder="Color Name"
+          variant="filled"
+          margin="normal"
+          name={colorName}
+          onChange={handleChange}
+          value={colorName}
+          validators={['required','isColorNameUnique', 'isColorUnique']}
+          errorMessages={['Enter a color name','Color name must be unique', 'Color already used']}
         />
-        <ValidatorForm onSubmit={addNewColor} instantValidate={false}>
-          <TextValidator 
-            className={classes.colorNameInput}
-            placeholder="Color Name"
-            variant="filled"
-            margin="normal"
-            name={colorName}
-            onChange={handleChange}
-            value={colorName}
-            validators={['required','isColorNameUnique', 'isColorUnique']}
-            errorMessages={['Enter a color name','Color name must be unique', 'Color already used']}
-          />
           <Button 
             variant="contained" 
             color="primary" 
@@ -70,7 +70,7 @@ const ColorPickerForm = (props) => {
           > 
             {isPaletteFull ? "Palette Full" : "Add Color"}
         </Button>
-        </ValidatorForm> 
+      </ValidatorForm> 
     </div>
     );
 };
