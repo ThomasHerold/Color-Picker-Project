@@ -53,9 +53,9 @@ const PaletteFormNav = (props) => {
         </AppBar>
         {formShowing && (
          <PaletteMetaForm 
-            handleChange={handleChange} 
+            handleChange={handleChange}  
+            newPaletteName={newPaletteName}
             handleSubmit={handleSubmit} 
-            newPaletteName={newPaletteName} 
             palettes={palettes}
             closeForm={handleClick}
         />
