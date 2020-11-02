@@ -7,7 +7,7 @@ export default {
         justifyContent: "center"
     },
     container: {
-        width: "45%",
+        width: "50%",
         display: "flex",
         alignItems: "flex-start",
         flexDirection: "column",
@@ -29,6 +29,7 @@ export default {
         width: "100%",
         display: "grid",
         gridTemplateColumns: "repeat(3, 30%)", // 3 items across at 30% width
-        gridGap: "5%"
+        gridGap: "5%",
+        lineHeight: "1rem"
     }
 }
