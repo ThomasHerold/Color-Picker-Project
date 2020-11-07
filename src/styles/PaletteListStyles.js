@@ -1,12 +1,30 @@
 import sizes from '../utils/sizes';
+import svg from '../utils/Polka-Dots.svg';
 
 export default {
+    "@global": {
+        ".fade-exit": {
+            opacity: "1"
+        },
+        ".fade-exit-active": {
+            opacity: "0",
+            transition: "opacity 500ms ease-out"
+        }
+    },
     root: {
-        backgroundColor: "blue",
         height: "100vh",
         display: "flex",
         alignItems: "flex-start",
-        justifyContent: "center"
+        justifyContent: "center",
+        /* background by SVGBackgrounds.com */
+        backgroundColor: "#3b3b3b",
+        backgroundImage: `url(${svg})`,
+        [sizes.down("xs")]: {
+            overflow: "scroll"
+        }
+    },
+    title: {
+        fontSize: "2rem"
     },
     container: {
         width: "50%",

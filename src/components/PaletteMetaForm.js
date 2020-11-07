@@ -14,7 +14,7 @@ const PaletteMetaForm = (props) => {
   const { handleChange, newPaletteName, palettes, closeForm, handleSubmit } = props;
 
   const showEmojiPicker = () => {
-    setStage("emoji")
+    setStage("emoji");
   };
 
   const savePalette = (emoji) => {
@@ -23,6 +23,7 @@ const PaletteMetaForm = (props) => {
       emoji: emoji.native
     }
     handleSubmit(newPalette);
+    setStage("");
   };
 
   useEffect(() => {

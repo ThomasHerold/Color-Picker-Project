@@ -3,19 +3,19 @@ import { withStyles } from '@material-ui/styles';
 import styles from '../styles/MiniPaletteStyles';
 import DeleteIcon from '@material-ui/icons/Delete';
 
-const Minipalette = (props) => {
-    const { classes, paletteName, emoji, colors, handleClick, handleDelete } = props;
+const Minipalette = React.memo((props) => {
+    const { classes, paletteName, emoji, colors, handleClick, openDialog } = props;
     const miniColorBoxes = colors.map(color => (
         <div className={classes.miniColor} style={{ backgroundColor: color.color}} key={color.name} />
     ));
 
     const deletePalette = (e) => {
         e.stopPropagation();
-        handleDelete(props.id);
+        openDialog(props.id);
     };
 
     return (
-        <div className={classes.root} onClick={handleClick}>
+        <div className={classes.root} onClick={() => handleClick(props.id)}>
             <DeleteIcon className={classes.deleteIcon} onClick={deletePalette} />
             <div className={classes.colors}>
                 {miniColorBoxes}
@@ -25,7 +25,7 @@ const Minipalette = (props) => {
             </h5>
         </div>
     );
-};
+});
 
 // HOC takes minipalette and makes new component that adds styles to our props
 export default withStyles(styles)(Minipalette);
