@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { withStyles } from '@material-ui/styles';
 import styles from '../styles/ColorBoxStyles';
+import classNames from 'classnames';
 
 
 class Colorbox extends Component {
@@ -28,8 +29,8 @@ class Colorbox extends Component {
     <CopyToClipboard text={background} onCopy={this.changeCopyState}>
         <div style={{ background }} className={classes.ColorBox}>
           {/* the reason we grow on a separate div rather than the top one is because growing a div will also grow the contents within it */}
-          <div style={{ background }} className={`${classes.copyOverlay} ${copied && classes.showOverlay}` } />
-          <div className={`${classes.copyMessage} ${copied && classes.showMessage}` }>
+          <div style={{ background }} className={classNames(classes.copyOverlay, {[classes.showOverlay]: copied})} />
+          <div className={classNames(classes.copyMessage, {[classes.showMessage]: copied})}>
               <h1>Copied!</h1>
               <p className={classes.copyText}>{background}</p>
           </div>

@@ -1,4 +1,4 @@
-export const useStyles = () => ({
+export const styles = ({
     root: {
       width: "100%"
     },

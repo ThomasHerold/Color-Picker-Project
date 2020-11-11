@@ -11,12 +11,13 @@ import ColorPickerForm from './ColorPickerForm';
 import Button from '@material-ui/core/Button';
 import DraggableColorList from './DraggableColorList';
 import arrayMove from 'array-move';
+import seedColors from '../utils/seedColors';
 
 const NewPaletteForm = (props) => {
   const classes = useStyles();
   const [open, setOpen] = useState(true);
   const [currentColor, setColor] = useState("teal");
-  const [colors, setColorList] = useState(props.palettes[0].colors);
+  const [colors, setColorList] = useState(seedColors[0].colors);
   const [colorName, setName] = useState("");
   const [newPaletteName, setPaletteName] = useState("");
   const isPaletteFull = colors.length >= 20;
@@ -31,7 +32,6 @@ const NewPaletteForm = (props) => {
 
   const updateCurrentColor = (newColor) => {
     setColor(newColor.hex);
-    console.log(currentColor);
   }
 
   const addNewColor = () => {
